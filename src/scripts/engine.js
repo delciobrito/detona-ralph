@@ -7,10 +7,27 @@ const state = {
     },
 
     value: {
-        timeId: null,
         gameVelocity: 1000,
         hitPosition: 0,
         result: 0,
+        currentTime: 6,
+    },
+    
+    action: {
+        timeId: null,
+        countDownTimerId: setInterval(countDown, 1000),
+    }
+}
+
+// função para fazer o tempo diminuir, e esta funtion é chamada pelo objeto 'state'
+function countDown() {
+    
+    state.value.currentTime--;
+    state.view.timeLeft.textContent = state.value.currentTime
+    if(state.value.currentTime <= 0) {
+        clearInterval(state.action.countDownTimerId)
+        clearInterval(state.action.timeId)
+        alert("O tempo acabou!")
     }
 }
 
@@ -37,7 +54,7 @@ function randomSquare() {
 
 // outra maneira de mover o inimigo
 function moveEnemy() {
-    state.value.timeId = setInterval(randomSquare, state.value.gameVelocity)
+    state.action.timeId = setInterval(randomSquare, state.value.gameVelocity)
 }
 
 function addListenerHitBox() {
