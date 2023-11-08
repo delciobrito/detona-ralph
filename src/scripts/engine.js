@@ -9,6 +9,8 @@ const state = {
     value: {
         timeId: null,
         gameVelocity: 1000,
+        hitPosition: 0,
+        result: 0,
     }
 }
 
@@ -23,6 +25,8 @@ function randomSquare() {
     let randomNumber = Math.floor(Math.random() * 9)
     let randomSquare = state.view.square[randomNumber];
     randomSquare.classList.add("enemy")
+
+    state.value.hitPosition = randomSquare.id
 }
 
 // função para mover o inimigo
@@ -39,11 +43,21 @@ function moveEnemy() {
 function addListenerHitBox() {
     state.view.square.forEach((square) => {
 
+        // escuta quando o mouse é clicado em um dos quadrados
+        square.addEventListener("mousedown", () => {
+            if(square.id === state.value.hitPosition) {
+                state.view.score.textContent = state.value.result++
+
+                // para impedir queo jogador fique clicando mais de uma vez somando pontos infinitamente
+                state.value.hitPosition = null
+            }
+        })
     })
 }
 
 function initialize() {
     moveEnemy()
+    addListenerHitBox()
 }
 
 initialize()
