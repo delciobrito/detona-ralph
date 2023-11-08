@@ -1,11 +1,13 @@
 .container {
     display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .menu {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: space-evenly;
 
     height: 90px;
     width: 100%;
@@ -15,4 +17,24 @@
 
 .title {
     color: #ff0000;
+}
+
+.panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ff0000;
+    margin-top: 1rem;
+}
+
+.square {
+    border: 1px solid #000000;
+    background-color: #80ffd4;
+    height: 150px;
+    width: 150px;
+}
+
+.enemy {
+    background-color: #ff0000;
 }
