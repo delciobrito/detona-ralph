@@ -10,7 +10,7 @@ const state = {
         gameVelocity: 1000,
         hitPosition: 0,
         result: 0,
-        currentTime: 6,
+        currentTime: 30,
     },
     
     action: {
@@ -19,15 +19,33 @@ const state = {
     }
 }
 
-// função para fazer o tempo diminuir, e esta funtion é chamada pelo objeto 'state'
+// function playSound() {
+//     let audio = new Audio("./src/audios/hit.m4a")
+//     // tratanto o volume do som
+//     audio.volume = 0.2
+//     // precisa chamar o audio
+//     audio.play()
+// }
+
+// outra maneira de implementar o áudio de maneira mais dinâmica
+function playSound(audioName) {
+    let audio = new Audio(`./src/audios/${audioName}.m4a`)
+    audio.volume = 0.2
+    audio.play()
+}
+
+// função para fazer o tempo diminuir, e esta função é chamada pelo objeto 'state'
 function countDown() {
-    
+    // guarda o tempo e decrementa ele
     state.value.currentTime--;
+    // mostra o tempo sendo decrementado
     state.view.timeLeft.textContent = state.value.currentTime
+    // verifica se o tempo acabou
     if(state.value.currentTime <= 0) {
+        // limpando os intervalos
         clearInterval(state.action.countDownTimerId)
         clearInterval(state.action.timeId)
-        alert("O tempo acabou!")
+        alert("O tempo acabou! Sua pontuação é " + state.value.result)
     }
 }
 
@@ -64,9 +82,10 @@ function addListenerHitBox() {
         square.addEventListener("mousedown", () => {
             if(square.id === state.value.hitPosition) {
                 state.view.score.textContent = state.value.result++
-
-                // para impedir queo jogador fique clicando mais de uma vez somando pontos infinitamente
+                
+                // para impedir que o jogador fique clicando mais de uma vez somando pontos infinitamente
                 state.value.hitPosition = null
+                playSound("hit")
             }
         })
     })
